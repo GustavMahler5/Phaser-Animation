@@ -8,14 +8,19 @@ class myGame extends Phaser.Scene {
     preload() {
     }
 
-    build(){
-
-    }
     create() {
     }
-    update(){
 
+    update() {
     }
+}
+
+let config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: "#000000",
+    scene: myGame
 }
 
 let game = new Phaser.Game();
