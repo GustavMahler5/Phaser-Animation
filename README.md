@@ -14,11 +14,11 @@ Audio Assets
 ----------------------
 There are 2 featured audio assets:
 
-Morning in the Slag Ravine  
+*Morning in the Slag Ravine*  
 Composed by Joe Hisaishi  
 Performed by Jason Holtman  
 
-Nocturne Opus 9 No. 1 in B flat minor  
+*Nocturne Opus 9 No. 1 in B flat minor*  
 Composed by Frédéric Chopin  
 Performed by Jason Holtman  
 
