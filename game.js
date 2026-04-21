@@ -7,13 +7,14 @@ class Logo extends Phaser.Scene {
 
     preload() {
         this.load.setPath("assets/");
-        this.load.image("Character", "Character.png");
+        this.load.image("Logo", "Logo.png");
     }
 
     create() {
         // this.graphics = this.add.graphics();
         // let character = this.add.image(400, 300, "Character");
         this.add.text(400, 300, "Logo Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        this.add.image(800, 300, "Logo");
         this.input.once("pointerdown", () => {
             this.scene.start("Intro");
         });
@@ -28,6 +29,8 @@ class Intro extends Phaser.Scene {
         super({ key: "Intro" });
     }
 
+    clickStep = 0;
+
     preload() {
         this.load.setPath("assets/");
         this.load.audio("Intro", "Intro.mp3");
@@ -37,7 +40,21 @@ class Intro extends Phaser.Scene {
     create() {
         // let character = this.add.image(400, 300, "Character");
         this.add.text(400, 300, "Intro Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.input.once("pointerdown", () => {
+        this.input.on("pointerdown", () => {
+            this.clickStep++;
+
+            if (this.clickStep == 1) {
+                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 2) {
+                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 3) {
+                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+                this.scene.start("Dialogue");
+            }
+        });
+        this.time.delayedCall(5000, () => {
             this.scene.start("Dialogue");
         });
     }
@@ -51,6 +68,8 @@ class Dialogue extends Phaser.Scene {
         super({ key: "Dialogue" });
     }
 
+    clickStep = 0;
+
     preload() {
         this.load.setPath("assets/");
         this.load.image("Character", "Character.png");
@@ -61,8 +80,19 @@ class Dialogue extends Phaser.Scene {
         // let background = this.add.image(400, 300, "Background");
         // let character = this.add.image(400, 300, "Character");
         this.add.text(400, 300, "Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.input.once("pointerdown", () => {
-            this.scene.start("MainMenu");
+        this.input.on("pointerdown", () => {
+            this.clickStep++;
+
+            if (this.clickStep == 1) {
+                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 2) {
+                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 3) {
+                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+                this.scene.start("MainMenu");
+            }
         });
     }
 
@@ -75,6 +105,9 @@ class MainMenu extends Phaser.Scene {
         super({ key: "MainMenu" });
     }
 
+    clickStep = 0;
+
+
     preload() {
         this.load.setPath("assets/");
         this.load.image("Background", "Background.png");
@@ -85,6 +118,20 @@ class MainMenu extends Phaser.Scene {
         // let mainMenu = this.sound.add("MainMenu", { loop: true });
         // let background = this.add.image(400, 300, "Background");
         this.add.text(400, 300, "Main Menu Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        this.input.on("pointerdown", () => {
+            this.clickStep++;
+
+            if (this.clickStep == 1) {
+                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 2) {
+                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+            }
+            else if (this.clickStep == 3) {
+                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+                this.scene.start("Intro");
+            }
+        });
     }
 
     update() {
