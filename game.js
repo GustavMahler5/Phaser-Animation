@@ -6,43 +6,60 @@ class Logo extends Phaser.Scene {
         super({ key: "Logo" });
     }
 
-    clickStep = 0;
-
     preload() {
         this.load.setPath("assets/");
         this.load.image("Logo", "Logo.png");
     }
 
     create() {
-        // this.graphics = this.add.graphics();
-        // let character = this.add.image(400, 300, "Character");
-        this.startText = this.add.text(400, 300, "Click to Start", {
+
+        this.startText = this.add.text(475, 325, "Click to Start", {
             font: "32px Arial",
             fill: "#ffffff"
         }).setOrigin(0.5);
         this.input.on("pointerdown", () => {
             this.clickStep++;
             this.startText.destroy();
-            let image = this.add.image(800, 300, 'Logo');
+            
+            let studioName = this.add.text(475, 250, "Platynum Studios", {
+                font: "64px Cinzel",
+                fill: "#ffffff",
+                stroke: "#525252",
+                strokeThickness: 4,
+            }).setOrigin(0.5);
 
-            if (this.clickStep == 1) {
-                image.setAlpha(0);
-                this.tweens.add({
-                    targets: image,
-                    alpha: 1, // Fade to opaque
-                    duration: 2000,
-                    ease: 'Linear'
-                });
-            }
-            this.time.delayedCall(100, () => { // CHANGE TO 4000
+            let image = this.add.image(475, 450, 'Logo').setOrigin(0.5);
+            image.setAlpha(0);
+            studioName.setAlpha(0);
+
+            this.tweens.add({
+                targets: image,
+                alpha: 1, // Fade to opaque
+                duration: 2000,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: studioName,
+                alpha: 1, // Fade to opaque
+                duration: 2000,
+                ease: 'Linear'
+            });
+
+            this.time.delayedCall(4000, () => { // CHANGE TO 4000
                 this.tweens.add({
                     targets: image,
                     alpha: 0, // Fade to transparent;
                     duration: 2000,
                     ease: 'Linear'
                 });
+                this.tweens.add({
+                    targets: studioName,
+                    alpha: 0, // Fade to transparent;
+                    duration: 2000,
+                    ease: 'Linear'
+                });
             });
-            this.time.delayedCall(100, () => { // CHANGE TO 10000
+            this.time.delayedCall(8000, () => { // CHANGE TO 8000
                 this.scene.start("Intro");
             });
             
@@ -59,8 +76,6 @@ class Intro extends Phaser.Scene {
         super({ key: "Intro" });
     }
 
-    clickStep = 0;
-
     preload() {
         this.load.setPath("assets/");
         this.load.audio("Intro", "Intro.mp3");
@@ -68,30 +83,28 @@ class Intro extends Phaser.Scene {
     }
 
     create() {
-        // let character = this.add.image(400, 300, "Character");
-        this.add.text(400, 300, "Intro Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        // this.input.on("pointerdown", () => {
-        //     this.clickStep++;
-
-        //     if (this.clickStep == 1) {
-        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 2) {
-        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 3) {
-        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //         this.scene.start("Dialogue");
-        //     }
-        // });
-        let character = this.add.image(400, 300, "Character");
-        let characterIntro = this.add.text(400, 100, "Introducing this character", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        let characterIntro2 = this.add.text(400, 100, "Introducing this character some more", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //this.sound.play("Intro", { volume: 0.1 });
+        //this.add.text(400, 300, "Intro Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        let character = this.add.image(500, 325, "Character");
+        this.sound.play("Intro", { volume: 0.1 }, { loop: false });
+        let characterIntro = this.add.text(20, 550, 
+            "King Wobblebeak III: The True Great and Supreme Legendary \nGenius Ruler of \“The Slightly Damp Lands\”", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });
+        let characterIntro2 = this.add.text(20, 555, 
+            "Rarely is he away from the \“Puddle of Royalty\”. \nBut now he investigates a concern at the \“River of Heroes\”", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });
         character.setAlpha(0);
         characterIntro.setAlpha(0);
         characterIntro2.setAlpha(0);
-        this.time.delayedCall(100, () => { // 7500
+
+        this.time.delayedCall(7500, () => { // 7500
             this.tweens.add({
                 targets: character,
                 alpha: 1, // Fade to opaque
@@ -105,7 +118,7 @@ class Intro extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        this.time.delayedCall(100, () => { // 15000
+        this.time.delayedCall(15000, () => { // 15000
             this.tweens.add({
                 targets: characterIntro2,
                 alpha: 1, // Fade to opaque
@@ -119,7 +132,7 @@ class Intro extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        this.time.delayedCall(100, () => { // 23000
+        this.time.delayedCall(23000, () => { // 23000
             this.tweens.add({
                 targets: characterIntro2,
                 alpha: 0, // Fade to transparent
@@ -133,7 +146,7 @@ class Intro extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        this.time.delayedCall(100, () => { // 38000
+        this.time.delayedCall(28000, () => { // 28000
             this.scene.start("Dialogue");
         });
     }
@@ -148,8 +161,6 @@ class Dialogue extends Phaser.Scene {
         super({ key: "Dialogue" });
     }
 
-    clickStep = 0;
-
     preload() {
         this.load.setPath("assets/");
         this.load.image("Character", "Character.png");
@@ -157,25 +168,45 @@ class Dialogue extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(400, 300, "Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //this.add.text(400, 300, "Dialogue Scene", { font: "32px Arial", fill: "#ffffff" });
         let background = this.add.image(400, 300, "Background");
-        let character = this.add.image(400, 300, "Character");
+        let character = this.add.image(500, 325, "Character");
+
+        let dialogue1 = this.add.text(20, 575, "King Wobblebeak: General Quacksalot? What tidings bring you?", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });
+
+        let dialogue2 = this.add.text(20, 575, "….", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });
+
+        let dialogue3 = this.add.text(20, 575, "King Wobblebeak: So they return to plague us once more…", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });
+
+        let dialogue4 = this.add.text(20, 575, "King Wobblebeak: Then we must make haste!", 
+            { font: "32px Arial", 
+                backgroundColor: '#d6d6d6', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#000000" 
+            });   
+
         character.alpha = 0;
         background.alpha = 0;
-        // this.input.on("pointerdown", () => {
-        //     this.clickStep++;
+        dialogue1.alpha = 0;
+        dialogue2.alpha = 0;
+        dialogue3.alpha = 0;
+        dialogue4.alpha = 0;
 
-        //     if (this.clickStep == 1) {
-        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 2) {
-        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 3) {
-        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //         this.scene.start("MainMenu");
-        //     }
-        // });
         this.time.delayedCall(100, () => {
             this.tweens.add({
                 targets: background,
@@ -183,6 +214,8 @@ class Dialogue extends Phaser.Scene {
                 duration: 3000,
                 ease: 'Linear'
             });
+        });
+        this.time.delayedCall(100, () => {
             this.tweens.add({
                 targets: character,
                 alpha: 1, // Fade to opaque
@@ -190,7 +223,80 @@ class Dialogue extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        this.time.delayedCall(3000, () => {
+        this.time.delayedCall(4000, () => {
+            this.tweens.add({
+                targets: dialogue1,
+                alpha: 1, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(8000, () => {
+            this.tweens.add({
+                targets: dialogue2,
+                alpha: 1, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: dialogue1,
+                alpha: 0, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(12000, () => {
+            this.tweens.add({
+                targets: dialogue3,
+                alpha: 1, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: dialogue2,
+                alpha: 0, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(16000, () => {
+            this.tweens.add({
+                targets: dialogue4,
+                alpha: 1, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: dialogue3,
+                alpha: 0, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(20000, () => {
+            this.tweens.add({
+                targets: dialogue4,
+                alpha: 0, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: character,
+                x: -200, // Tween off the screen to the left
+                duration: 2000,
+                ease: 'Linear'
+            });
+
+        });
+        this.time.delayedCall(23000, () => {
+            this.tweens.add({
+                targets: background,
+                alpha: 0, // Fade to opaque
+                duration: 2000,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(25000, () => {
             this.scene.start("MainMenu");
         });
     }
@@ -205,9 +311,6 @@ class MainMenu extends Phaser.Scene {
         super({ key: "MainMenu" });
     }
 
-    clickStep = 0;
-
-
     preload() {
         this.load.setPath("assets/");
         this.load.image("Background", "Background.png");
@@ -216,15 +319,27 @@ class MainMenu extends Phaser.Scene {
 
     create() {
         let background = this.add.image(400, 300, "Background");
-        let selectionText1 = this.add.text(50, 75, "Investigate: Begin Story", { font: "32px Arial", fill: "#ffffff" });
-        let selectionText2 = this.add.text(50, 150, "Settings", { font: "32px Arial", fill: "#ffffff" });
-        let selectionText3 = this.add.text(50, 225, "Quit", { font: "32px Arial", fill: "#ffffff" });
-        // this.selectionText1.setInteractive();
-        // this.selectionText2.setInteractive();
-        // this.selectionText3.setInteractive();
+        let selectionText1 = this.add.text(50, 75, "Investigate: Begin Story", 
+            { font: "32px Arial", 
+                //backgroundColor: '#a3a3a3', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#ffffff" 
+            });
+        let selectionText2 = this.add.text(50, 150, "Settings", 
+            { font: "32px Arial", 
+                //backgroundColor: '#a3a3a3', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#ffffff" 
+            });
+        let selectionText3 = this.add.text(50, 225, "Quit", 
+            { font: "32px Arial", 
+                //backgroundColor: '#a3a3a3', 
+                padding: { left: 10, right: 10, top: 5, bottom: 5 }, 
+                fill: "#ffffff" 
+            });
+
         background.alpha = 0;
         this.sound.play("MainMenu", { volume: 0.2 }, { loop: true });
-        this.add.text(400, 300, "Main Menu Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
         this.time.delayedCall(50, () => {
             this.tweens.add({
                 targets: background,
@@ -233,30 +348,9 @@ class MainMenu extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        // this.input.on("pointerdown", () => {
-        //     this.clickStep++;
-
-        //     if (this.clickStep == 1) {
-        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 2) {
-        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //     }
-        //     else if (this.clickStep == 3) {
-        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        //         this.scene.start("Intro");
-        //     }
-        // });
     }
 
     update() {
-        // this.selectionText1.on("pointerover", () => {
-        //     this.selectionText1.setColor("#ff0000"); // change to red on hover
-        // });
-
-        // this.selectionText1.on("pointerout", () => {
-        //     this.selectionText1.setColor("#ffffff"); // back to white
-        // });
     }
 }
 
