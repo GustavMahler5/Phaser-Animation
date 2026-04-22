@@ -17,7 +17,7 @@ class Logo extends Phaser.Scene {
             font: "32px Arial",
             fill: "#ffffff"
         }).setOrigin(0.5);
-        this.input.on("pointerdown", () => {
+        this.input.once("pointerdown", () => {
             this.clickStep++;
             this.startText.destroy();
             
