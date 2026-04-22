@@ -18,7 +18,6 @@ class Logo extends Phaser.Scene {
             fill: "#ffffff"
         }).setOrigin(0.5);
         this.input.once("pointerdown", () => {
-            this.clickStep++;
             this.startText.destroy();
             
             let studioName = this.add.text(475, 250, "Platynum Studios", {
@@ -180,7 +179,7 @@ class Dialogue extends Phaser.Scene {
     preload() {
         this.load.setPath("assets/");
         this.load.image("Character", "Character.png");
-        this.load.image("Background", "Background.png");
+        this.load.image("Background", "Background.PNG");
     }
 
     create() {
