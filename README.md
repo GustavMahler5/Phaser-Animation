@@ -1,14 +1,13 @@
 # Phaser-Animation
-Animation using Phaser CMPM 120
+Animation using Phaser - CMPM 120
 
 Scenes
 ----------------------
 This animation features 3 different scenes:
 
-A Logo scene which introduces the studio logo  
-An Introduction scene which introduces some
-characters and a simple plot  
-A Main Menu Scene which shows the beginning of the game  
+A Logo scene which introduces the studio logo.  
+An Introduction scene which introduces some characters and a simple plot.  
+A Main Menu Scene which shows the beginning of the game.  
 
 Audio Assets
 ----------------------
@@ -37,16 +36,21 @@ Picture by Jason Holtman
 
 Geometric Shapes
 ----------------------
+A star shape next to the "Platynum Studios" logo.  
+A circle used to signify which option the player is hovering in the main menu.
 
 Logotype
 ----------------------
-
+https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap
 
 Multi-line Text
 ----------------------
+Multi-line dialogue of text throughout the scenes which feature the platypus character.
 
 Fading Scene Transition
 ----------------------
+All scenes fade into each other.
 
 Object Motion
 ----------------------
+The platypus character tweens offscreen to the left after the introduction scene concludes.
