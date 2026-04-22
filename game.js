@@ -85,7 +85,7 @@ class Intro extends Phaser.Scene {
     create() {
         //this.add.text(400, 300, "Intro Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
         let character = this.add.image(500, 325, "Character");
-        this.sound.play("Intro", { volume: 0.1 }, { loop: false });
+        this.sound.play("Intro", { volume: 0.2 }, { loop: false });
         let characterIntro = this.add.text(20, 550, 
             "King Wobblebeak III: The True Great and Supreme Legendary \nGenius Ruler of \“The Slightly Damp Lands\”", 
             { font: "32px Arial", 
@@ -319,6 +319,8 @@ class MainMenu extends Phaser.Scene {
 
     create() {
         let background = this.add.image(400, 300, "Background");
+        this.graphics = this.add.graphics();
+        this.graphics.fillCircle(400, 75, 50, 0x000000);
         let selectionText1 = this.add.text(50, 75, "Investigate: Begin Story", 
             { font: "32px Arial", 
                 //backgroundColor: '#a3a3a3', 
@@ -339,7 +341,7 @@ class MainMenu extends Phaser.Scene {
             });
 
         background.alpha = 0;
-        this.sound.play("MainMenu", { volume: 0.2 }, { loop: true });
+        this.sound.play("MainMenu", { volume: 0.3 }, { loop: true });
         this.time.delayedCall(50, () => {
             this.tweens.add({
                 targets: background,
