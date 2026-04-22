@@ -1,9 +1,12 @@
 console.log("game.js is running\n")
 
+
 class Logo extends Phaser.Scene {
     constructor() {
         super({ key: "Logo" });
     }
+
+    clickStep = 0;
 
     preload() {
         this.load.setPath("assets/");
@@ -13,16 +16,43 @@ class Logo extends Phaser.Scene {
     create() {
         // this.graphics = this.add.graphics();
         // let character = this.add.image(400, 300, "Character");
-        this.add.text(400, 300, "Logo Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.add.image(800, 300, "Logo");
-        this.input.once("pointerdown", () => {
-            this.scene.start("Intro");
+        this.startText = this.add.text(400, 300, "Click to Start", {
+            font: "32px Arial",
+            fill: "#ffffff"
+        }).setOrigin(0.5);
+        this.input.on("pointerdown", () => {
+            this.clickStep++;
+            this.startText.destroy();
+            let image = this.add.image(800, 300, 'Logo');
+
+            if (this.clickStep == 1) {
+                image.setAlpha(0);
+                this.tweens.add({
+                    targets: image,
+                    alpha: 1, // Fade to opaque
+                    duration: 2000,
+                    ease: 'Linear'
+                });
+            }
+            this.time.delayedCall(100, () => { // CHANGE TO 4000
+                this.tweens.add({
+                    targets: image,
+                    alpha: 0, // Fade to transparent;
+                    duration: 2000,
+                    ease: 'Linear'
+                });
+            });
+            this.time.delayedCall(100, () => { // CHANGE TO 10000
+                this.scene.start("Intro");
+            });
+            
         });
     }
 
     update() {
     }
 }
+
 
 class Intro extends Phaser.Scene {
     constructor() {
@@ -40,21 +70,70 @@ class Intro extends Phaser.Scene {
     create() {
         // let character = this.add.image(400, 300, "Character");
         this.add.text(400, 300, "Intro Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.input.on("pointerdown", () => {
-            this.clickStep++;
+        // this.input.on("pointerdown", () => {
+        //     this.clickStep++;
 
-            if (this.clickStep == 1) {
-                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 2) {
-                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 3) {
-                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-                this.scene.start("Dialogue");
-            }
+        //     if (this.clickStep == 1) {
+        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 2) {
+        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 3) {
+        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //         this.scene.start("Dialogue");
+        //     }
+        // });
+        let character = this.add.image(400, 300, "Character");
+        let characterIntro = this.add.text(400, 100, "Introducing this character", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        let characterIntro2 = this.add.text(400, 100, "Introducing this character some more", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //this.sound.play("Intro", { volume: 0.1 });
+        character.setAlpha(0);
+        characterIntro.setAlpha(0);
+        characterIntro2.setAlpha(0);
+        this.time.delayedCall(100, () => { // 7500
+            this.tweens.add({
+                targets: character,
+                alpha: 1, // Fade to opaque
+                duration: 3000,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: characterIntro,
+                alpha: 1, // Fade to opaque
+                duration: 3000,
+                ease: 'Linear'
+            });
         });
-        this.time.delayedCall(5000, () => {
+        this.time.delayedCall(100, () => { // 15000
+            this.tweens.add({
+                targets: characterIntro2,
+                alpha: 1, // Fade to opaque
+                duration: 3000,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: characterIntro,
+                alpha: 0, // Fade to transparent
+                duration: 3000,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(100, () => { // 23000
+            this.tweens.add({
+                targets: characterIntro2,
+                alpha: 0, // Fade to transparent
+                duration: 3000,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: character,
+                alpha: 0, // Fade to transparent
+                duration: 3000,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(100, () => { // 38000
             this.scene.start("Dialogue");
         });
     }
@@ -62,6 +141,7 @@ class Intro extends Phaser.Scene {
     update() {
     }
 }
+
 
 class Dialogue extends Phaser.Scene {
     constructor() {
@@ -77,28 +157,48 @@ class Dialogue extends Phaser.Scene {
     }
 
     create() {
-        // let background = this.add.image(400, 300, "Background");
-        // let character = this.add.image(400, 300, "Character");
         this.add.text(400, 300, "Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.input.on("pointerdown", () => {
-            this.clickStep++;
+        let background = this.add.image(400, 300, "Background");
+        let character = this.add.image(400, 300, "Character");
+        character.alpha = 0;
+        background.alpha = 0;
+        // this.input.on("pointerdown", () => {
+        //     this.clickStep++;
 
-            if (this.clickStep == 1) {
-                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 2) {
-                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 3) {
-                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-                this.scene.start("MainMenu");
-            }
+        //     if (this.clickStep == 1) {
+        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 2) {
+        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 3) {
+        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //         this.scene.start("MainMenu");
+        //     }
+        // });
+        this.time.delayedCall(100, () => {
+            this.tweens.add({
+                targets: background,
+                alpha: 1, // Fade to opaque
+                duration: 3000,
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: character,
+                alpha: 1, // Fade to opaque
+                duration: 3000,
+                ease: 'Linear'
+            });
+        });
+        this.time.delayedCall(3000, () => {
+            this.scene.start("MainMenu");
         });
     }
 
     update() {
     }
 }
+
 
 class MainMenu extends Phaser.Scene {
     constructor() {
@@ -115,33 +215,55 @@ class MainMenu extends Phaser.Scene {
     }
 
     create() {
-        // let mainMenu = this.sound.add("MainMenu", { loop: true });
-        // let background = this.add.image(400, 300, "Background");
+        let background = this.add.image(400, 300, "Background");
+        let selectionText1 = this.add.text(50, 75, "Investigate: Begin Story", { font: "32px Arial", fill: "#ffffff" });
+        let selectionText2 = this.add.text(50, 150, "Settings", { font: "32px Arial", fill: "#ffffff" });
+        let selectionText3 = this.add.text(50, 225, "Quit", { font: "32px Arial", fill: "#ffffff" });
+        // this.selectionText1.setInteractive();
+        // this.selectionText2.setInteractive();
+        // this.selectionText3.setInteractive();
+        background.alpha = 0;
+        this.sound.play("MainMenu", { volume: 0.2 }, { loop: true });
         this.add.text(400, 300, "Main Menu Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-        this.input.on("pointerdown", () => {
-            this.clickStep++;
-
-            if (this.clickStep == 1) {
-                this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 2) {
-                this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-            }
-            else if (this.clickStep == 3) {
-                this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
-                this.scene.start("Intro");
-            }
+        this.time.delayedCall(50, () => {
+            this.tweens.add({
+                targets: background,
+                alpha: 0.3, // Fade to opaque
+                duration: 500,
+                ease: 'Linear'
+            });
         });
+        // this.input.on("pointerdown", () => {
+        //     this.clickStep++;
+
+        //     if (this.clickStep == 1) {
+        //         this.add.text(400, 400, "Clicked Once", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 2) {
+        //         this.add.text(400, 500, "Clicked Twice", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //     }
+        //     else if (this.clickStep == 3) {
+        //         this.add.text(400, 600, "Transitioning to Dialogue Scene", { font: "32px Arial", fill: "#ffffff" }).setOrigin(0.5);
+        //         this.scene.start("Intro");
+        //     }
+        // });
     }
 
     update() {
+        // this.selectionText1.on("pointerover", () => {
+        //     this.selectionText1.setColor("#ff0000"); // change to red on hover
+        // });
+
+        // this.selectionText1.on("pointerout", () => {
+        //     this.selectionText1.setColor("#ffffff"); // back to white
+        // });
     }
 }
 
 let config = {
     type: Phaser.AUTO,
-    width: 1179,
-    height: 699,
+    width: 950,
+    height: 650,
     backgroundColor: "#000000",
     scene: [ Logo, Intro, Dialogue, MainMenu ]
 }
