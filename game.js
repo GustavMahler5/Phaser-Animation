@@ -28,9 +28,11 @@ class Logo extends Phaser.Scene {
                 strokeThickness: 4,
             }).setOrigin(0.5);
 
+            let star = this.add.star(850, 250, 10, 20, 40, 0xcecece).setOrigin(0.5);
             let image = this.add.image(475, 450, 'Logo').setOrigin(0.5);
             image.setAlpha(0);
             studioName.setAlpha(0);
+            star.setAlpha(0);
 
             this.tweens.add({
                 targets: image,
@@ -38,6 +40,14 @@ class Logo extends Phaser.Scene {
                 duration: 2000,
                 ease: 'Linear'
             });
+
+            this.tweens.add({
+                targets: star,
+                alpha: 1,
+                duration: 2000,
+                ease: 'Linear'
+            });
+
             this.tweens.add({
                 targets: studioName,
                 alpha: 1, // Fade to opaque
@@ -55,6 +65,12 @@ class Logo extends Phaser.Scene {
                 this.tweens.add({
                     targets: studioName,
                     alpha: 0, // Fade to transparent;
+                    duration: 2000,
+                    ease: 'Linear'
+                });
+                this.tweens.add({
+                    targets: star,
+                    alpha: 0, // Fade to opaque
                     duration: 2000,
                     ease: 'Linear'
                 });
@@ -296,7 +312,7 @@ class Dialogue extends Phaser.Scene {
                 ease: 'Linear'
             });
         });
-        this.time.delayedCall(25000, () => {
+        this.time.delayedCall(25000, () => { // 25000
             this.scene.start("MainMenu");
         });
     }
@@ -320,7 +336,8 @@ class MainMenu extends Phaser.Scene {
     create() {
         let background = this.add.image(400, 300, "Background");
         this.graphics = this.add.graphics();
-        this.graphics.fillCircle(400, 75, 50, 0x000000);
+        this.graphics.fillStyle(0xffffff, 1);
+        this.graphics.fillCircle(430, 99, 9, 0xffffff);
         let selectionText1 = this.add.text(50, 75, "Investigate: Begin Story", 
             { font: "32px Arial", 
                 //backgroundColor: '#a3a3a3', 
