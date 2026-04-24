@@ -13,7 +13,7 @@ class Logo extends Phaser.Scene {
 
     create() {
 
-        this.startText = this.add.text(475, 325, "CLick anywhere, refresh the page once, and click again to start", {
+        this.startText = this.add.text(475, 325, "Click anywhere, refresh the page once, and click again to start", {
             font: "32px Arial",
             fill: "#ffffff"
         }).setOrigin(0.5);
