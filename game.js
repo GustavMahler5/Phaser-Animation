@@ -13,7 +13,7 @@ class Logo extends Phaser.Scene {
 
     create() {
 
-        this.startText = this.add.text(475, 325, "Refresh the page once and click to start", {
+        this.startText = this.add.text(475, 325, "CLick anywhere, refresh the page once, and click again to start", {
             font: "32px Arial",
             fill: "#ffffff"
         }).setOrigin(0.5);
@@ -377,6 +377,11 @@ let config = {
     width: 950,
     height: 650,
     backgroundColor: "#000000",
+    parent: "root",
+    scale: {
+        mode: Phaser.Scale.FIT, // Ensures the game fits the screen
+        autoCenter: Phaser.Scale.CENTER_BOTH // Centers game horizontally and vertically
+    },
     scene: [ Logo, Intro, Dialogue, MainMenu ]
 }
 
